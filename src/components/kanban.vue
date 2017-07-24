@@ -1,7 +1,7 @@
 <template>
   <div class="task-board">
     <div class="district">
-      <swimline v-for="one in matters" :meta.sync="one">
+      <swimline class="sortable-item" v-for="one in matters" :meta.sync="one">
       </swimline>
     </div>
     <item-creator v-on:creation="addMatter" text="新建列表"></item-creator>
@@ -21,7 +21,11 @@ export default {
   },
   data () {
     return {
-      matters:   []
+      matters:   [{
+        name:   'todo'
+      }, {
+        name:   'doing'
+      }]
     }
   },
   methods:  {
@@ -30,7 +34,27 @@ export default {
         name: option.name
       })
     }
-  }
+  },
+  mounted:   function() {
+    let ctx = this,
+      $district = this.$el.getElementsByClassName('district')[0];
+    Sortable.create($district, {
+      draggable: '.sortable-item',
+      handle:    '.swimline-header',
+      onEnd (evt) {
+        let swimlines = ctx.swimlines;
+        ctx.swimlines = [];
+
+        setTimeout(() => {
+          let item = swimlines[evt.oldIndex];
+          swimlines.splice(evt.oldIndex, 1);
+          swimlines.splice(evt.newIndex, 0, item);
+
+          ctx.swimlines = swimlines;
+        }, 0)
+      }
+    });
+  },
 }
 </script>
 

@@ -1,12 +1,12 @@
 <template>
-  <div class="taskcard">
+  <div class="list-group-item taskcard"> 
     {{meta.name}}
-  </div>
+  </div>        
 </template>
 
 <script>
 export default {
-  name:  'card',
+  name:  'taskcard',
   props:  ['meta'],
   data () {
     return {

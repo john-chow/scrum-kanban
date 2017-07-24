@@ -4,9 +4,9 @@
       <div class="swimline-header">
         <span class="title">{{meta.name}}</span>
       </div>
-      <div class="swimline-cards">
-        <card v-for="one in things" :meta.sync="one"></card>
-      </div>
+      <draggable class="list-group swimline-cards" element="div" v-model="tasks" :options="dragOptions" :move="onMoveCard" @start="isDragging=true" @end="isDragging=false"> 
+        <taskcard v-for="(one, index) in tasks" :meta.sync="one" :key="index"></taskcard>
+      </draggable>    
       <div class="swimline-footer">
         <item-creator v-on:creation="addThing" text="新建任务"></item-creator>
       </div>
@@ -15,25 +15,55 @@
 </template>
 
 <script>
-import Card from './card.vue'
+import Taskcard from './taskcard.vue'
 import ItemCreator from './item_creator.vue'
+import Draggable from 'vuedraggable'
 
 export default {
   name:   'swimline',
   props:  ['meta'],
   components: {
-    Card,
-    ItemCreator
+    Taskcard,
+    ItemCreator,
+    Draggable 
   },
   data () {
     return {
-      things:  []
+      tasks:  [],
+      isDragging: false,
+      delayedDragging:false
+    }
+  },
+  computed: {
+    dragOptions () {
+      return  {
+        animation: 0,
+        group: 'description',
+        ghostClass: 'ghost'
+      };
     }
   },
   methods: {
     addThing(option) {
-      this.things.push({
+      this.tasks.push({
         name: option.name
+      })
+    },
+    onMoveCard ({relatedContext, draggedContext}) {
+      const relatedElement = relatedContext.element;
+      const draggedElement = draggedContext.element;
+      console.log((!relatedElement || !relatedElement.fixed) && !draggedElement.fixed);
+      return (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+    },
+  },
+  watch:  {
+    isDragging (newValue) {
+      if (newValue){
+        this.delayedDragging= true
+        return
+      }
+      this.$nextTick( () =>{
+        this.delayedDragging =false
       })
     }
   }
