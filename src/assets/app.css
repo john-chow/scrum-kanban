@@ -1,0 +1,12 @@
+.task-board > .district {
+  display: inline-block;
+  height: 100%;
+}
+
+.task-board .entry-new {
+  position: relative;
+  width: 296px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 16px 0 8px;
+}

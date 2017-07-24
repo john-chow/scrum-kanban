@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <div>
-      <swimline v-for="one in matters">
+  <div class="task-board">
+    <div class="district">
+      <swimline v-for="one in matters" :meta.sync="one">
       </swimline>
     </div>
-    <div>
-      <item-creator text="新建列表"></item-creator>
-    </div>
+    <item-creator v-on:creation="addMatter" text="新建列表"></item-creator>
   </div>
 </template>
 
@@ -24,6 +22,13 @@ export default {
   data () {
     return {
       matters:   []
+    }
+  },
+  methods:  {
+    addMatter(option) {
+      this.matters.push({
+        name: option.name
+      })
     }
   }
 }
