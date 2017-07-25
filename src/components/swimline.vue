@@ -3,6 +3,7 @@
     <div class="swimline-content">
       <div class="swimline-header">
         <span class="title">{{meta.name}}</span>
+        <i @click="openMenu" class="fa fa-chevron-down action" aria-hidden="true"></i>
       </div>
       <draggable class="list-group swimline-cards" element="div" v-model="tasks" :options="dragOptions" :move="onMoveCard" @start="isDragging=true" @end="isDragging=false"> 
         <taskcard v-for="(one, index) in tasks" :meta.sync="one" :key="index"></taskcard>
@@ -10,6 +11,12 @@
       <div class="swimline-footer">
         <item-creator v-on:creation="addThing" text="新建任务"></item-creator>
       </div>
+    </div>
+    <div v-show="menuOpening" class="pbox">
+      <ul class="pop-menu">
+        <li><a href="javascript:;" @click="rename">重命名</a></li>
+        <li><a href="javascript:;" @click="todelete">删除</a></li>
+      </ul>
     </div>
   </div>
 </template>
@@ -21,7 +28,7 @@ import Draggable from 'vuedraggable'
 
 export default {
   name:   'swimline',
-  props:  ['meta'],
+  props:  ['meta', 'ordernum'],
   components: {
     Taskcard,
     ItemCreator,
@@ -31,7 +38,8 @@ export default {
     return {
       tasks:  [],
       isDragging: false,
-      delayedDragging:false
+      delayedDragging:false,
+      menuOpening: false
     }
   },
   computed: {
@@ -52,9 +60,25 @@ export default {
     onMoveCard ({relatedContext, draggedContext}) {
       const relatedElement = relatedContext.element;
       const draggedElement = draggedContext.element;
-      console.log((!relatedElement || !relatedElement.fixed) && !draggedElement.fixed);
       return (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
     },
+    openMenu() {
+      this.menuOpening = true;
+      let ctx = this;
+      setTimeout(() => {
+        document.body.addEventListener('click', () => {
+          ctx.menuOpening = false;
+        }, {once: true});
+      }, 1)
+    },
+    rename() {
+    },
+    todelete() {
+      this.$emit('deletion', {
+        order:  this.ordernum,
+        meta:   this.meta,
+      })
+    }
   },
   watch:  {
     isDragging (newValue) {
@@ -109,8 +133,16 @@ export default {
     text-overflow: ellipsis;
     color: #4f555f;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 700;
     margin-bottom: 6px;
+  }
+  .swimline-header .action {
+    display: block;
+    position: absolute;
+    right: 8px;
+    top: 10px;
+    font-size: 16px;
+    cursor: pointer;
   }
   .swimline-cards {
     overflow-y: auto;

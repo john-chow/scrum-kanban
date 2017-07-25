@@ -9,7 +9,10 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "jquery": "^2.1.4",
     "sortablejs": "^1.6.0",
     "url-loader": "^0.5.9",
     "vue": "^2.3.3",

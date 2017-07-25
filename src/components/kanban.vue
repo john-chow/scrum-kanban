@@ -1,7 +1,7 @@
 <template>
   <div class="task-board">
     <div class="district">
-      <swimline class="sortable-item" v-for="one in matters" :meta.sync="one">
+      <swimline class="sortable-item" v-for="(one, index) in matters" :meta.sync="one" :ordernum="index" v-on:deletion="deleteMatter">
       </swimline>
     </div>
     <item-creator v-on:creation="addMatter" text="新建列表"></item-creator>
@@ -12,6 +12,8 @@
 import Swimline from './swimline.vue'
 import ItemCreator from './item_creator.vue'
 import 'bootstrap/dist/css/bootstrap.css'
+import 'animate.css'
+import 'font-awesome/css/font-awesome.css'
 
 export default {
   name:  'kanban',
@@ -33,6 +35,10 @@ export default {
       this.matters.push({
         name: option.name
       })
+    },
+    deleteMatter(option) {
+      let index = option.order;
+      this.matters.splice(index, 1);
     }
   },
   mounted:   function() {
@@ -59,4 +65,14 @@ export default {
 </script>
 
 <style>
+.task-board {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
 </style>

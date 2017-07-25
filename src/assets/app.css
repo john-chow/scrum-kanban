@@ -5,8 +5,65 @@
 
 .task-board .entry-new {
   position: relative;
-  width: 296px;
+  width: 236px;
   display: inline-block;
   vertical-align: top;
   margin: 0 16px 0 8px;
+}
+
+.pbox {
+  border-radius: 0;
+  border: 0;
+  z-index: 1100;
+  position: absolute;
+  text-align: left;
+  font-size: 14px;
+  background: #FFF;
+}
+
+.pbox .pop-menu,
+.pbox .sub-menu,
+.pbox .pop-menu {
+  box-shadow: 0 0 24px rgba(0,0,0,.18);
+  min-width: 240px;
+}
+
+.pop-menu {
+  min-width: 240px;
+  padding: 5px 0;
+  display: block;
+}
+
+.pop-menu .menu-item, 
+.pop-menu li {
+  padding: 0;
+  margin: 0 0 2px;
+  display: block;
+  cursor: pointer;
+}
+
+.pop-menu .menu-item.active, 
+.pop-menu .menu-item:hover, 
+.pop-menu li.active, 
+.pop-menu li:hover {
+  background: #eaeaea;
+}
+
+.pop-menu .menu-item a.no-icon, .pop-menu li a.no-icon {
+  padding-left: 40px;
+}
+
+.pop-menu .menu-item a, .pop-menu li a {
+  text-decoration: none;
+  display: block;
+  color: #333;
+  border-left: 4px rgba(255,255,255,0) solid;
+  box-sizing: border-box;
+  padding: 10px 15px;
+}
+
+.task-board .modal-dialog {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%); 
 }

@@ -2,7 +2,7 @@
   <div class="entry-new">
     <div v-if="is_creating">
       <div class="form-group">
-        <input type="text" v-model="name" class="form-control">
+        <input type="text" v-model="name" v-on:keyup.13="create" class="form-control">
       </div>
       <div class="form-group">
         <button class="btn btn-primary" @click="create">确定</button>
