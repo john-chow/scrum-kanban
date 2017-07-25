@@ -61,9 +61,3 @@
   box-sizing: border-box;
   padding: 10px 15px;
 }
-
-.task-board .modal-dialog {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%); 
-}

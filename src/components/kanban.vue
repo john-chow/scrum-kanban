@@ -9,10 +9,10 @@
 </template>
 
 <script>
+import 'bootstrap'
 import Swimline from './swimline.vue'
 import ItemCreator from './item_creator.vue'
 import 'bootstrap/dist/css/bootstrap.css'
-import 'animate.css'
 import 'font-awesome/css/font-awesome.css'
 
 export default {

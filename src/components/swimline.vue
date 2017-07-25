@@ -6,15 +6,15 @@
         <i @click="openMenu" class="fa fa-chevron-down action" aria-hidden="true"></i>
       </div>
       <draggable class="list-group swimline-cards" element="div" v-model="tasks" :options="dragOptions" :move="onMoveCard" @start="isDragging=true" @end="isDragging=false"> 
-        <taskcard v-for="(one, index) in tasks" :meta.sync="one" :key="index"></taskcard>
+        <taskcard v-for="(one, index) in tasks" :meta.sync="one" :ordernum="index" v-on:deletion="deleteCard"></taskcard>
       </draggable>    
       <div class="swimline-footer">
-        <item-creator v-on:creation="addThing" text="新建任务"></item-creator>
+        <item-creator v-on:creation="addCard" text="新建任务"></item-creator>
       </div>
     </div>
-    <div v-show="menuOpening" class="pbox">
+    <div v-show="menuOpening" class="menus pbox">
       <ul class="pop-menu">
-        <li><a href="javascript:;" @click="rename">重命名</a></li>
+        <li><a href="javascript:;" @click="rename">...</a></li>
         <li><a href="javascript:;" @click="todelete">删除</a></li>
       </ul>
     </div>
@@ -52,19 +52,26 @@ export default {
     }
   },
   methods: {
-    addThing(option) {
+    addCard(option) {
       this.tasks.push({
         name: option.name
       })
+    },
+    deleteCard(option) {
+      let index = option.order;
+      this.tasks.splice(index, 1);
     },
     onMoveCard ({relatedContext, draggedContext}) {
       const relatedElement = relatedContext.element;
       const draggedElement = draggedContext.element;
       return (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
     },
-    openMenu() {
+    openMenu(e) {
+      let ctx = this,
+          menu_dom = this.$el.getElementsByClassName('menus')[0];
+      menu_dom.style.left = e.x + 'px';
+      menu_dom.style.top = (e.y + 10) + 'px';
       this.menuOpening = true;
-      let ctx = this;
       setTimeout(() => {
         document.body.addEventListener('click', () => {
           ctx.menuOpening = false;
