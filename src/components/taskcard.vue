@@ -1,26 +1,20 @@
 <template>
-  <div class="list-group-item taskcard" :class="{ 'task-complete': is_complete == true }" @click.self="openDetail"> 
+  <div class="list-group-item taskcard" :class="{ 'task-complete': is_complete == true }" @click="detail_opening = true"> 
     <a href="javascript:;" v-on:click.stop="toggleCompletion" class="task-check" draggable="false">
       <i class="task-check fa fa-square-o" :class="{ 'fa-check-square': is_complete==true }" aria-hidden="true"></i>
     </a> 
     <span class="task-title">{{meta.name}}</span>
-    <div class="modal fade" :id="[uuid]" tabindex="-1" role="dialog" v-on:click.stop="uuid=uuid">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="gridSystemModalLabel">{{meta.name}}</h4>
-          </div>
-          <div class="modal-body"> 
-            <button type="button" class="btn btn-default" @click="todelete">删除</button>
-          </div>
-        </div>
+    <modal :show.sync="detail_opening" effect="zoom" @mousedown.capture="xxx">
+      <div slot="modal-header" class="modal-header">
+        <h4 class="modal-title">Modal title</h4>
       </div>
-    </div>
+      <div slot="modal-body" class="modal-body">...</div>
+    </modal>
   </div>        
 </template>
 
 <script>
+import {modal} from 'vue-strap'
 export default {
   name:  'taskcard',
   props:  ['meta', 'ordernum'],
@@ -28,17 +22,15 @@ export default {
     return {
       uuid:   null,
       is_complete:  false,
+      detail_opening:   false,
     }
+  },
+  components: {
+    modal
   },
   methods:  {
     toggleCompletion() {
       this.is_complete = !this.is_complete;
-    },
-    openDetail() {
-      let id = '#' + this.uuid;
-      $(id).modal();
-    },
-    closeDetail() {
     },
     todelete() {
       debugger;
@@ -46,6 +38,9 @@ export default {
         index:  ordernum,
         meta:   meta,
       })
+    },
+    xxx() {
+      debugger;
     }
   },
   created() {

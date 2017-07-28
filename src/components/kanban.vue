@@ -1,7 +1,7 @@
 <template>
   <div class="task-board">
     <div class="district">
-      <swimline class="sortable-item" v-for="(one, index) in matters" :meta.sync="one" :ordernum="index" v-on:deletion="deleteMatter">
+      <swimline class="sortable-item" v-for="(one, index) in matters" :key="index" :meta.sync="one" :ordernum="index" v-on:deletion="deleteMatter">
       </swimline>
     </div>
     <item-creator v-on:creation="addMatter" text="新建列表"></item-creator>
