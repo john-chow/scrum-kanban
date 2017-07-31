@@ -1,10 +1,11 @@
 <template>
   <div class="task-board">
     <div class="district">
-      <swimline class="sortable-item" v-for="(one, index) in matters" :key="index" :meta.sync="one" :ordernum="index" v-on:deletion="deleteMatter">
+      <swimline class="sortable-item" v-for="(one, index) in matters" :key="index" :meta.sync="one" :ordernum="index" v-on:deletion="deleteMatter" v-on:opencard="openCard">
       </swimline>
     </div>
     <item-creator v-on:creation="addMatter" text="新建列表"></item-creator>
+    <taskdetail id="current-task" :opening.sync="card_opening"></taskdetail>
   </div>
 </template>
 
@@ -12,6 +13,7 @@
 import 'bootstrap'
 import Swimline from './swimline.vue'
 import ItemCreator from './item_creator.vue'
+import Taskdetail from './taskdetail.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'font-awesome/css/font-awesome.css'
 
@@ -19,7 +21,8 @@ export default {
   name:  'kanban',
   components: {
     Swimline,
-    ItemCreator
+    ItemCreator,
+    Taskdetail
   },
   data () {
     return {
@@ -27,7 +30,9 @@ export default {
         name:   'todo'
       }, {
         name:   'doing'
-      }]
+      }],
+      card_opening: false,
+      opening_card: null
     }
   },
   methods:  {
@@ -39,6 +44,11 @@ export default {
     deleteMatter(option) {
       let index = option.order;
       this.matters.splice(index, 1);
+    },
+    openCard(option) {
+      console.log('receive opencard');
+      this.card_opening = true;
+      this.opening_card = option.card;
     }
   },
   mounted:   function() {

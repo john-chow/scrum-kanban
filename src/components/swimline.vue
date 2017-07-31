@@ -6,7 +6,7 @@
         <i @click="openMenu" class="fa fa-chevron-down action" aria-hidden="true"></i>
       </div>
       <draggable class="list-group swimline-cards" element="div" v-model="tasks" :options="dragOptions" :move="onMoveCard" @start="isDragging=true" @end="isDragging=false"> 
-        <taskcard v-for="(one, index) in tasks" :key="index" :meta.sync="one" :ordernum="index" v-on:deletion="deleteCard"></taskcard>
+        <taskcard v-for="(one, index) in tasks" :key="index" :meta.sync="one" :ordernum="index" v-on:deletion="deleteCard" v-on:opencard="openCard"></taskcard>
       </draggable>    
       <div class="swimline-footer">
         <item-creator v-on:creation="addCard" text="新建任务"></item-creator>
@@ -85,6 +85,9 @@ export default {
         order:  this.ordernum,
         meta:   this.meta,
       })
+    },
+    openCard(option) {
+      this.$emit('opencard', option);
     }
   },
   watch:  {

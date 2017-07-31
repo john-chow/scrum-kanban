@@ -1,20 +1,13 @@
 <template>
-  <div class="list-group-item taskcard" :class="{ 'task-complete': is_complete == true }" @click="detail_opening = true"> 
+  <div class="list-group-item taskcard" :class="{ 'task-complete': is_complete == true }" @click="toggleOpen"> 
     <a href="javascript:;" v-on:click.stop="toggleCompletion" class="task-check" draggable="false">
       <i class="task-check fa fa-square-o" :class="{ 'fa-check-square': is_complete==true }" aria-hidden="true"></i>
     </a> 
     <span class="task-title">{{meta.name}}</span>
-    <modal :show.sync="detail_opening" effect="zoom" @mousedown.capture="xxx">
-      <div slot="modal-header" class="modal-header">
-        <h4 class="modal-title">Modal title</h4>
-      </div>
-      <div slot="modal-body" class="modal-body">...</div>
-    </modal>
   </div>        
 </template>
 
 <script>
-import {modal} from 'vue-strap'
 export default {
   name:  'taskcard',
   props:  ['meta', 'ordernum'],
@@ -22,15 +15,17 @@ export default {
     return {
       uuid:   null,
       is_complete:  false,
-      detail_opening:   false,
     }
-  },
-  components: {
-    modal
   },
   methods:  {
     toggleCompletion() {
       this.is_complete = !this.is_complete;
+    },
+    toggleOpen() {
+      console.log('open');
+      this.$emit('opencard', {
+        task:   this,
+      })
     },
     todelete() {
       debugger;
@@ -38,9 +33,6 @@ export default {
         index:  ordernum,
         meta:   meta,
       })
-    },
-    xxx() {
-      debugger;
     }
   },
   created() {
