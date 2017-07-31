@@ -7,7 +7,6 @@
 
 ## requirement
 Vue.Draggable
-
 vue-trap
 
 ## Build Setup
