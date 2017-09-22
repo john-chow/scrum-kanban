@@ -1,6 +1,14 @@
 # scrum-kanban
 
-> A Vue.js project
+> 实现敏捷项目的看板模型
+
+## demo
+<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" />
+
+## requirement
+Vue.Draggable
+
+vue-trap
 
 ## Build Setup
 
@@ -15,4 +23,4 @@ npm run dev
 npm run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
