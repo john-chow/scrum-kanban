@@ -3,7 +3,7 @@
 > 实现敏捷项目的看板模型
 
 ## demo
-<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" />
+<img src="https://github.com/john-chow/scrum-kanban/blob/master/src/assets/scrum-kan.gif" />
 
 ## requirement
 Vue.Draggable
